@@ -1,0 +1,4 @@
+${PODS_ROOT}/Target Support Files/Pods-ID123AssessmentDemo/Pods-ID123AssessmentDemo-frameworks.sh
+${BUILT_PRODUCTS_DIR}/MBProgressHUD/MBProgressHUD.framework
+${BUILT_PRODUCTS_DIR}/SDWebImage/SDWebImage.framework
+${BUILT_PRODUCTS_DIR}/Toast-Swift/Toast_Swift.framework
