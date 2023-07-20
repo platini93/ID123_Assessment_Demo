@@ -22,12 +22,9 @@ class RestaurantSearchViewController: UIViewController, RestaurantsViewProtocol 
         selectedRadius = radius
         print("Radius value = \(selectedRadius)")
         let value = slider.value/1000
-        selectedRadiusLabel.text = String(format: "%.1f", value) + " KM"
+        selectedRadiusLabel.text = String(format: "%.2f", value) + " KM"
         selectedOffset = 0
         restaurantsTableView.setContentOffset(.zero, animated: true)
-        
-//        restDataArray.removeAll()
-//        restaurantsTableView.reloadData()
         self.view.makeToast("Pull to refresh")
     }
     
@@ -91,6 +88,18 @@ class RestaurantSearchViewController: UIViewController, RestaurantsViewProtocol 
         }
     }
     
+    func showListBottomLoader() {
+        DispatchQueue.main.async {
+            self.restaurantsTableView.showLoadingFooter()
+        }
+    }
+    
+    func hideListBottomLoader() {
+        DispatchQueue.main.async {
+            self.restaurantsTableView.hideLoadingFooter()
+        }
+    }
+    
     
     
     func updateUI() {
@@ -140,10 +149,10 @@ extension RestaurantSearchViewController: UITableViewDelegate, UITableViewDataSo
     }
     
     func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
-        if indexPath.row == restDataArray.count - 1 { // last cell
-            if restData.total > restDataArray.count { // more items to fetch
+        if indexPath.row == restDataArray.count - 1 {
+            if restData.total > restDataArray.count {
                 selectedOffset += GlobalConstants.pageLimit
-                restaurantsViewModel?.callAPIToGetRestaurantData(radius: selectedRadius, offset: selectedOffset)
+                restaurantsViewModel?.callAPIToGetRestaurantData(radius: selectedRadius, offset: selectedOffset, showBottomLoader: true)
             }
         }
     }

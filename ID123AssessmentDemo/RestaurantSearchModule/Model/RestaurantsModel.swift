@@ -20,11 +20,12 @@ class Address {
 
 class RestaurantsModel {
     
+    // call api to get restaurant data
     func fetchRestaurantsData(radius: Int, offset: Int, completion: @escaping (_ allData:RestaurantData?, _ error:Error?) -> Void) {
         
         let listData:RestaurantData = RestaurantData()
         
-        var urlString:String = "\(URLConstants.restaurantSearchURL)?term=restaurants&location=NYC&radius=\(radius)&limit=\(GlobalConstants.pageLimit)&sort_by=distance&offset=\(offset)"
+        let urlString:String = "\(URLConstants.restaurantSearchURL)?term=restaurants&location=NYC&radius=\(radius)&limit=\(GlobalConstants.pageLimit)&sort_by=distance&offset=\(offset)"
         
         NetworkRequest.shared.getRequest(urlString: urlString, completion: { data, error in
             
