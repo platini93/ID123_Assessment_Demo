@@ -48,6 +48,12 @@ class RestaurantSearchViewController: UIViewController, RestaurantsViewProtocol 
         }
     }
     
+    override func didReceiveMemoryWarning() {
+        view.makeToast("Low on memory, resetting data")
+        restDataArray.removeAll()
+        restaurantsTableView.reloadData()
+    }
+    
     func setupUI() {
         // initializing UI
         radiusSlider.minimumValue = 100
@@ -62,7 +68,7 @@ class RestaurantSearchViewController: UIViewController, RestaurantsViewProtocol 
     @objc func refresh(_ sender: AnyObject) {
         // pull to refresh
         restDataArray.removeAll()
-        selectedOffset = 0 // -gr
+        selectedOffset = 0 
         restaurantsViewModel?.callAPIToGetRestaurantData(radius: selectedRadius, offset: selectedOffset)
     }
     
