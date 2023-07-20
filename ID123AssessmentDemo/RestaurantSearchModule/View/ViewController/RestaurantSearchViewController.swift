@@ -52,8 +52,10 @@ class RestaurantSearchViewController: UIViewController, RestaurantsViewProtocol 
     }
     
     func setupUI() {
+        // initializing UI
         radiusSlider.minimumValue = 100
         radiusSlider.maximumValue = 5000
+        radiusSlider.thumbTintColor = .black
         
         refreshControl.attributedTitle = NSAttributedString(string: "Pull to refresh")
         refreshControl.addTarget(self, action: #selector(self.refresh(_:)), for: .valueChanged)
@@ -61,10 +63,13 @@ class RestaurantSearchViewController: UIViewController, RestaurantsViewProtocol 
     }
     
     @objc func refresh(_ sender: AnyObject) {
-       // Code to refresh table view
+        // pull to refresh
         restDataArray.removeAll()
+        selectedOffset = 0 // -gr
         restaurantsViewModel?.callAPIToGetRestaurantData(radius: selectedRadius, offset: selectedOffset)
     }
+    
+    //MARK: RestaurantsViewProtocol methods -
     
     func showActIndicator() {
         DispatchQueue.main.async {
@@ -89,6 +94,7 @@ class RestaurantSearchViewController: UIViewController, RestaurantsViewProtocol 
     
     
     func updateUI() {
+        // update UI after receiving API response
         restData = restaurantsViewModel?.restData ?? RestaurantData()
         restDataArray.append(contentsOf: restData.businesses)
         
@@ -125,6 +131,7 @@ extension RestaurantSearchViewController: UITableViewDelegate, UITableViewDataSo
         cell.restImageView.contentMode = .scaleToFill
         cell.ratingsLbl.layer.cornerRadius = cell.ratingsLbl.frame.size.height/2
         cell.ratingsLbl.layer.masksToBounds = true
+        cell.selectionStyle = .none
         return cell
     }
     
